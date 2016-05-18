@@ -33,9 +33,9 @@
 
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:name="com.easemob.chatuidemo.permission.C2D_MESSAGE"
+    <permission android:name="cn.leon.superwechat.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.easemob.chatuidemo.permission.C2D_MESSAGE" />
+    <uses-permission android:name="cn.leon.superchat.permission.C2D_MESSAGE" />
     
     
     <application
@@ -330,7 +330,7 @@
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="379029170#superwechat001"  /> 
+            android:value="379029170#superwechat001"  />
         <!-- 声明sdk所需的service -->
         <service android:name="com.easemob.chat.EMChatService"/>
         <!-- 声明sdk所需的receiver -->
