@@ -15,7 +15,9 @@ dependencies {
 android {
     compileSdkVersion 19
     buildToolsVersion "23.0.2"
-
+    defaultConfig{
+        applicationId "cn.leon.superwechat"
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
