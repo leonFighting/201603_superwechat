@@ -53,7 +53,7 @@ import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
-import cn.leon.superwechat.SuperWeChat;
+import cn.leon.superwechat.SuperWeChatApplication;
 import cn.leon.superwechat.DemoHXSDKHelper;
 import cn.leon.superwechat.adapter.ChatHistoryAdapter;
 import cn.leon.superwechat.db.InviteMessgeDao;
@@ -97,7 +97,7 @@ public class ChatHistoryFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				EMContact emContact = adapter.getItem(position);
-				if (adapter.getItem(position).getUsername().equals(SuperWeChat.getInstance().getUserName()))
+				if (adapter.getItem(position).getUsername().equals(SuperWeChatApplication.getInstance().getUserName()))
 					Toast.makeText(getActivity(), st, 0).show();
 				else {
 					// 进入聊天页面
