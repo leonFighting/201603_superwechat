@@ -40,7 +40,6 @@ public class SplashActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-
 		new Thread(new Runnable() {
 			public void run() {
 				if (DemoHXSDKHelper.getInstance().isLogined()) {

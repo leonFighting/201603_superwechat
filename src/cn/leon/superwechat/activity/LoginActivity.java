@@ -36,7 +36,7 @@ import cn.leon.superwechat.applib.controller.HXSDKHelper;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import cn.leon.superwechat.Constant;
-import cn.leon.superwechat.SuperWeChatApplication;
+import cn.leon.superwechat.SuperWeChat;
 import cn.leon.superwechat.DemoHXSDKHelper;
 import cn.leon.superwechat.db.UserDao;
 import cn.leon.superwechat.domain.User;
@@ -91,8 +91,8 @@ public class LoginActivity extends BaseActivity {
 
 			}
 		});
-		if (SuperWeChatApplication.getInstance().getUserName() != null) {
-			usernameEditText.setText(SuperWeChatApplication.getInstance().getUserName());
+		if (SuperWeChat.getInstance().getUserName() != null) {
+			usernameEditText.setText(SuperWeChat.getInstance().getUserName());
 		}
 	}
 
@@ -141,8 +141,8 @@ public class LoginActivity extends BaseActivity {
 					return;
 				}
 				// 登陆成功，保存用户名密码
-				SuperWeChatApplication.getInstance().setUserName(currentUsername);
-				SuperWeChatApplication.getInstance().setPassword(currentPassword);
+				SuperWeChat.getInstance().setUserName(currentUsername);
+				SuperWeChat.getInstance().setPassword(currentPassword);
 
 				try {
 					// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
@@ -165,7 +165,7 @@ public class LoginActivity extends BaseActivity {
 				}
 				// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
 				boolean updatenick = EMChatManager.getInstance().updateCurrentUserNick(
-						SuperWeChatApplication.currentUserNick.trim());
+						SuperWeChat.currentUserNick.trim());
 				if (!updatenick) {
 					Log.e("LoginActivity", "update current user nick fail");
 				}

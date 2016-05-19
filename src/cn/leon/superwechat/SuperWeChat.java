@@ -18,10 +18,10 @@ import android.content.Context;
 
 import com.easemob.EMCallBack;
 
-public class SuperWeChatApplication extends Application {
+public class SuperWeChat extends Application {
 
 	public static Context applicationContext;
-	private static SuperWeChatApplication instance;
+	private static SuperWeChat instance;
 	// login user name
 	public final String PREF_USERNAME = "username";
 	
@@ -58,7 +58,7 @@ public class SuperWeChatApplication extends Application {
         hxSDKHelper.onInit(applicationContext);
 	}
 
-	public static SuperWeChatApplication getInstance() {
+	public static SuperWeChat getInstance() {
 		return instance;
 	}
  
