@@ -7,7 +7,7 @@ package cn.leon.superwechat.bean;
 public class User extends Location implements java.io.Serializable {
 	private static final long serialVersionUID = 6848921231724157394L;
 
-	// Fields
+	// Fields 
 
 	/**
 	 * 
