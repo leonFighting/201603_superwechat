@@ -19,7 +19,7 @@ import android.content.Context;
 import com.easemob.EMCallBack;
 
 public class SuperWeChatApplication extends Application {
-
+	public static String SERVER_ROOT="http://10.0.2.2:8080/SuperWeChatServer/Server";
 	public static Context applicationContext;
 	private static SuperWeChatApplication instance;
 	// login user name
@@ -29,7 +29,7 @@ public class SuperWeChatApplication extends Application {
 	 * 当前用户nickname,为了苹果推送不是userid而是昵称
 	 */
 	public static String currentUserNick = "";
-	public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper();
+	public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper( );
 
 	@Override
 	public void onCreate() {
@@ -84,7 +84,7 @@ public class SuperWeChatApplication extends Application {
 	/**
 	 * 设置用户名
 	 *
-	 * @param user
+	 * @param username
 	 */
 	public void setUserName(String username) {
 	    hxSDKHelper.setHXId(username);
