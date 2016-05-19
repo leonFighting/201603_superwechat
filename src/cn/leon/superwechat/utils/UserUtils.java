@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import cn.leon.superwechat.applib.controller.HXSDKHelper;
 import cn.leon.superwechat.DemoHXSDKHelper;
-import cn.leon.superwechat.domain.User;
+import cn.leon.superwechat.domain.EMUser;
 import com.squareup.picasso.Picasso;
 
 public class UserUtils {
@@ -16,10 +16,10 @@ public class UserUtils {
      * @param username
      * @return
      */
-    public static User getUserInfo(String username){
-        User user = ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getContactList().get(username);
+    public static EMUser getUserInfo(String username){
+        EMUser user = ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getContactList().get(username);
         if(user == null){
-            user = new User(username);
+            user = new EMUser(username);
         }
             
         if(user != null){
@@ -35,7 +35,7 @@ public class UserUtils {
      * @param username
      */
     public static void setUserAvatar(Context context, String username, ImageView imageView){
-    	User user = getUserInfo(username);
+    	EMUser user = getUserInfo(username);
         if(user != null && user.getAvatar() != null){
             Picasso.with(context).load(user.getAvatar()).placeholder(cn.leon.superwechat.R.drawable.default_avatar).into(imageView);
         }else{
@@ -47,7 +47,7 @@ public class UserUtils {
      * 设置当前用户头像
      */
 	public static void setCurrentUserAvatar(Context context, ImageView imageView) {
-		User user = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().getCurrentUserInfo();
+		EMUser user = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().getCurrentUserInfo();
 		if (user != null && user.getAvatar() != null) {
 			Picasso.with(context).load(user.getAvatar()).placeholder(cn.leon.superwechat.R.drawable.default_avatar).into(imageView);
 		} else {
@@ -59,7 +59,7 @@ public class UserUtils {
      * 设置用户昵称
      */
     public static void setUserNick(String username,TextView textView){
-    	User user = getUserInfo(username);
+    	EMUser user = getUserInfo(username);
     	if(user != null){
     		textView.setText(user.getNick());
     	}else{
@@ -71,7 +71,7 @@ public class UserUtils {
      * 设置当前用户昵称
      */
     public static void setCurrentUserNick(TextView textView){
-    	User user = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().getCurrentUserInfo();
+    	EMUser user = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().getCurrentUserInfo();
     	if(textView != null){
     		textView.setText(user.getNick());
     	}
@@ -81,7 +81,7 @@ public class UserUtils {
      * 保存或更新某个用户
      * @param user
      */
-	public static void saveUserInfo(User newUser) {
+	public static void saveUserInfo(EMUser newUser) {
 		if (newUser == null || newUser.getUsername() == null) {
 			return;
 		}

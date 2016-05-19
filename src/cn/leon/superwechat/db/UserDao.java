@@ -1,103 +1,77 @@
-/**
- * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package cn.leon.superwechat.db;
 
-import java.util.List;
-import java.util.Map;
-
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import cn.leon.superwechat.I;
+import cn.leon.superwechat.bean.User;
+
+/**
+ * Created by leon on 2016/5/19.
+ */
+public class UserDao extends SQLiteOpenHelper {
 
 
-import cn.leon.superwechat.domain.RobotUser;
-import cn.leon.superwechat.domain.User;
-
-public class UserDao {
-	public static final String TABLE_NAME = "uers";
-	public static final String COLUMN_NAME_ID = "username";
-	public static final String COLUMN_NAME_NICK = "nick";
-	public static final String COLUMN_NAME_AVATAR = "avatar";
-	
-	public static final String PREF_TABLE_NAME = "pref";
-	public static final String COLUMN_NAME_DISABLED_GROUPS = "disabled_groups";
-	public static final String COLUMN_NAME_DISABLED_IDS = "disabled_ids";
-
-	public static final String ROBOT_TABLE_NAME = "robots";
-	public static final String ROBOT_COLUMN_NAME_ID = "username";
-	public static final String ROBOT_COLUMN_NAME_NICK = "nick";
-	public static final String ROBOT_COLUMN_NAME_AVATAR = "avatar";
-	
-	
-	public UserDao(Context context) {
-	    DemoDBManager.getInstance().onInit(context);
-	}
-
-	/**
-	 * 保存好友list
-	 * 
-	 * @param contactList
-	 */
-	public void saveContactList(List<User> contactList) {
-	    DemoDBManager.getInstance().saveContactList(contactList);
-	}
-
-	/**
-	 * 获取好友list
-	 * 
-	 * @return
-	 */
-	public Map<String, User> getContactList() {
-		
-	    return DemoDBManager.getInstance().getContactList();
-	}
-	
-	/**
-	 * 删除一个联系人
-	 * @param username
-	 */
-	public void deleteContact(String username){
-	    DemoDBManager.getInstance().deleteContact(username);
-	}
-	
-	/**
-	 * 保存一个联系人
-	 * @param user
-	 */
-	public void saveContact(User user){
-	    DemoDBManager.getInstance().saveContact(user);
-	}
-	
-	public void setDisabledGroups(List<String> groups){
-	    DemoDBManager.getInstance().setDisabledGroups(groups);
+    public UserDao(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, "user.db", factory, 1);
     }
-    
-    public List<String>  getDisabledGroups(){       
-        return DemoDBManager.getInstance().getDisabledGroups();
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        String sql = "DROP TABLE IF EXISTS "+ I.User.TABLE_NAME+" " +
+                "CREATE TABLE "+I.User.TABLE_NAME +
+                I.User.USER_ID+" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                I.User.USER_NAME+" TEXT NOT NULL," +
+                I.User.PASSWORD+" TEXT NOT NULL," +
+                I.User.NICK+" TEXT NOT NULL," +
+                I.User.UN_READ_MSG_COUNT+" INTEGER DEFAULT 0" +");";
     }
-    
-    public void setDisabledIds(List<String> ids){
-        DemoDBManager.getInstance().setDisabledIds(ids);
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
     }
-    
-    public List<String> getDisabledIds(){
-        return DemoDBManager.getInstance().getDisabledIds();
+
+    public boolean addUser(User user) {
+        ContentValues values = new ContentValues();
+        values.put(I.User.USER_ID, user.getMUserId());
+        values.put(I.User.USER_NAME, user.getMUserName());
+        values.put(I.User.NICK, user.getMUserNick());
+        values.put(I.User.PASSWORD, user.getMUserPassword());
+        values.put(I.User.UN_READ_MSG_COUNT, user.getMUserUnreadMsgCount());
+        SQLiteDatabase db = getWritableDatabase();
+        long insert = db.insert(I.User.TABLE_NAME, null, values);
+        db.close();
+        return insert > 0;
     }
-    
-    public Map<String, RobotUser> getRobotUser(){
-    	return DemoDBManager.getInstance().getRobotList();
+    public boolean updateUser(User user) {
+        ContentValues values = new ContentValues();
+        values.put(I.User.USER_ID, user.getMUserId());
+        values.put(I.User.NICK, user.getMUserNick());
+        values.put(I.User.PASSWORD, user.getMUserPassword());
+        values.put(I.User.UN_READ_MSG_COUNT, user.getMUserUnreadMsgCount());
+        SQLiteDatabase db = getWritableDatabase();
+        long insert = db.update(I.User.TABLE_NAME, values, "where" + I.User.USER_NAME + "=?", new String[]{user.getMUserName()});
+        db.close();
+        return insert > 0;
     }
-    
-    public void saveRobotUser(List<RobotUser> robotList){
-    	DemoDBManager.getInstance().saveRobotList(robotList);
+
+    public User findUserByName(String userName) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "select* from" + I.User.TABLE_NAME + "where" + I.User.USER_NAME + "=?";
+        Cursor cursor = db.rawQuery(sql, new String[]{userName});
+        if (cursor.moveToNext()) {
+            int uid = cursor.getInt(cursor.getColumnIndex(I.User.USER_ID));
+            String nick = cursor.getString(cursor.getColumnIndex(I.User.NICK));
+            String password = cursor.getString(cursor.getColumnIndex(I.User.PASSWORD));
+            int unReadMsgCount = cursor.getInt(cursor.getColumnIndex(I.User.UN_READ_MSG_COUNT));
+            return new User(uid, userName, password, nick, unReadMsgCount);
+        }
+        cursor.close();
+        db.close();
+        return null;
     }
 }
