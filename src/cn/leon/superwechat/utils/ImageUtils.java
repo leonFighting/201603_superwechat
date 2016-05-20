@@ -13,8 +13,13 @@
  */
 package cn.leon.superwechat.utils;
 
+import android.content.Context;
+import android.os.Environment;
+
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
+
+import java.io.File;
 
 public class ImageUtils {
 //	public static String getThumbnailImagePath(String imagePath) {
@@ -41,6 +46,17 @@ public class ImageUtils {
         EMLog.d("msg", "thum image path:" + path);
         return path;
     }
-	
-	
+
+	/*
+		注册时把上传的头像保存到SD卡并且返回他的位置
+		给一个头像的保存地址，返回这个头像在sd卡的绝对路径
+	 */
+	public static String getAvatarPath(Context context, String path) {
+		File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+		File folder = new File(dir, path);
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+		return folder.getAbsolutePath();
+	}
 }
