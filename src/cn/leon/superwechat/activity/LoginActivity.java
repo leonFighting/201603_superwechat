@@ -76,9 +76,9 @@ public class LoginActivity extends BaseActivity {
         }
         setContentView(cn.leon.superwechat.R.layout.activity_login);
         mContext = this;
-        setListener();
         usernameEditText = (EditText) findViewById(cn.leon.superwechat.R.id.username);
         passwordEditText = (EditText) findViewById(cn.leon.superwechat.R.id.password);
+        setListener();
 
         if (SuperWeChatApplication.getInstance().getUserName() != null) {
             usernameEditText.setText(SuperWeChatApplication.getInstance().getUserName());
@@ -86,8 +86,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void setListener() {
-        setLoginClickListener();
         setUserNameTextChangeListener();
+        setLoginClickListener();
         setRegisterClickListener();
     }
 
@@ -116,7 +116,7 @@ public class LoginActivity extends BaseActivity {
      *
      */
     public void setLoginClickListener() {
-        findViewById(R.id.BtnLogin).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!CommonUtils.isNetWorkConnected(mContext)) {
@@ -257,11 +257,10 @@ public class LoginActivity extends BaseActivity {
      * 注册
      */
     public void setRegisterClickListener() {
-        findViewById(R.id.BtnRegister).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnRegister).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(mContext, RegisterActivity.class), 0);
-
             }
         });
     }
