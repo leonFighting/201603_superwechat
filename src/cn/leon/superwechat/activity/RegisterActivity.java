@@ -13,6 +13,7 @@
  */
 package cn.leon.superwechat.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +28,10 @@ import android.widget.Toast;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 
+import cn.leon.superwechat.I;
 import cn.leon.superwechat.R;
 import cn.leon.superwechat.SuperWeChatApplication;
+import cn.leon.superwechat.listener.OnSetAvatarListener;
 
 import com.easemob.exceptions.EaseMobException;
 
@@ -41,8 +44,10 @@ public class RegisterActivity extends BaseActivity {
 	private EditText userNickEditText;
 	private EditText passwordEditText;
 	private EditText confirmPwdEditText;
-	Context mContext;
+	Activity mContext;
 	ImageView mivAvatar;
+	OnSetAvatarListener mOnSetAvatarListener;
+	private String avatarName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,24 @@ public class RegisterActivity extends BaseActivity {
 	private void setListener() {
 		setOnRegisterListener();
 		setOnLoginListener();
+		setOnAvatarListener();
+	}
+
+	private void setOnAvatarListener() {
+		findViewById(R.id.layout_user_avatar).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mOnSetAvatarListener = new OnSetAvatarListener(mContext, R.id.layout_Register, getAvatarName(), I.AVATAR_TYPE_USER_PATH);
+			}
+		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == RESULT_OK) {
+			mOnSetAvatarListener.setAvatar(requestCode,data,mivAvatar);
+		}
 	}
 
 	private void setOnLoginListener() {
@@ -157,4 +180,8 @@ public class RegisterActivity extends BaseActivity {
 		finish();
 	}
 
+	public String getAvatarName() {
+		avatarName = System.currentTimeMillis() + "";
+		return avatarName;
+	}
 }
