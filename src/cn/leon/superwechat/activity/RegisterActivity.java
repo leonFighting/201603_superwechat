@@ -70,6 +70,7 @@ public class RegisterActivity extends BaseActivity {
 	private void initView() {
 		mivAvatar = (ImageView) findViewById(R.id.iv_avatar);
 		userNameEditText = (EditText) findViewById(cn.leon.superwechat.R.id.username);
+		userNickEditText = (EditText) findViewById(R.id.nick);
 		passwordEditText = (EditText) findViewById(cn.leon.superwechat.R.id.password);
 		confirmPwdEditText = (EditText) findViewById(cn.leon.superwechat.R.id.confirm_password);
 	}
@@ -83,6 +84,7 @@ public class RegisterActivity extends BaseActivity {
 			@Override
 			public void onClick(View view) {
 				final String username = userNameEditText.getText().toString().trim();
+				final String nick = userNickEditText.getText().toString().trim();
 				final String pwd = passwordEditText.getText().toString().trim();
 				final String confirm_pwd = confirmPwdEditText.getText().toString().trim();
 				if (TextUtils.isEmpty(username)) {
