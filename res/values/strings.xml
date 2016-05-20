@@ -308,6 +308,7 @@
     <string name="Create_groups_Failed">Failed to create groups</string>
     <string name="photo">photo</string>
     <string name="near_people_hint">See nearby people\'s function will get your location information, your location information will be kept for a period of time. Through the list of the top right corner to remove functions can be manually remove location information at any time.</string>
+    <string name="setting_Server_ip">setting server ip</string>
     <string name="MSG_900">MSG:CONNECTION SUCCESS</string>
     <string name="MSG_901">MSG:CONNECTION FAIL</string>
     <string name="MSG_902">MSG:UPLOAD AVATAR SUCCESS</string>

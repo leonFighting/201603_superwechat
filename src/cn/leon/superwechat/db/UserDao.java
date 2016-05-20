@@ -54,7 +54,8 @@ public class UserDao extends SQLiteOpenHelper {
         values.put(I.User.PASSWORD, user.getMUserPassword());
         values.put(I.User.UN_READ_MSG_COUNT, user.getMUserUnreadMsgCount());
         SQLiteDatabase db = getWritableDatabase();
-        long insert = db.update(I.User.TABLE_NAME, values, "where" + I.User.USER_NAME + "=?", new String[]{user.getMUserName()});
+        long insert = db.update(I.User.TABLE_NAME, values, "where" + I.User.USER_NAME + "=?",
+                new String[]{user.getMUserName()});
         db.close();
         return insert > 0;
     }

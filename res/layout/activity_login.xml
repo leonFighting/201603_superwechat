@@ -13,7 +13,7 @@
         <TextView
             android:textColor="Color.black"
             android:gravity="center"
-            android:text="超级微信"
+            android:text="@string/app_name"
             android:layout_centerInParent="true"
             android:drawableLeft="@drawable/mobile"
             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
     </RelativeLayout>
     <Button
         android:id="@+id/btnUrl"
-        android:text="设置服务端的IP地址"
+        android:text="@string/setting_Server_ip"
         android:textColor="color.black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -320,6 +320,7 @@
     <string name="near_people_hint">
         查看附近人的功能将获取你的位置信息，你的位置信息会保留一段时间。通过列表右上角清除功能可随时手动清除位置信息。
     </string>
+    <string name="setting_Server_ip">设置服务端的IP地址</string>
     <string name="MSG_900">连接服务器成功</string>
     <string name="MSG_901">连接服务器失败</string>
     <string name="MSG_902">上传头像成功</string>
