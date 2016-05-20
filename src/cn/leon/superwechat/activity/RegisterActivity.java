@@ -49,6 +49,11 @@ public class RegisterActivity extends BaseActivity {
 	OnSetAvatarListener mOnSetAvatarListener;
 	private String avatarName;
 
+	String username;
+	String nick;
+	String pwd;
+	String confirm_pwd;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,24 +111,31 @@ public class RegisterActivity extends BaseActivity {
 		findViewById(R.id.BtnRegister).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				final String username = userNameEditText.getText().toString().trim();
-				final String nick = userNickEditText.getText().toString().trim();
-				final String pwd = passwordEditText.getText().toString().trim();
-				final String confirm_pwd = confirmPwdEditText.getText().toString().trim();
+				username = userNameEditText.getText().toString().trim();
+				nick = userNickEditText.getText().toString().trim();
+				pwd = passwordEditText.getText().toString().trim();
+				confirm_pwd = confirmPwdEditText.getText().toString().trim();
 				if (TextUtils.isEmpty(username)) {
-					Toast.makeText(mContext, getResources().getString(cn.leon.superwechat.R.string.User_name_cannot_be_empty), Toast.LENGTH_SHORT).show();
 					userNameEditText.requestFocus();
+					userNameEditText.setError(getResources().getString(cn.leon.superwechat.R.string.User_name_cannot_be_empty));
 					return;
+				} else if (username.matches("[\\w][\\w\\d_]+")) {
+					userNameEditText.requestFocus();
+					userNameEditText.setError(getResources().getString(cn.leon.superwechat.R.string.User_name_cannot_be_wd));
+				} else if (TextUtils.isEmpty(nick)) {
+					userNickEditText.requestFocus();
+					userNameEditText.setError(getResources().getString(cn.leon.superwechat.R.string.Nick_name_cannot_be_empty));
 				} else if (TextUtils.isEmpty(pwd)) {
-					Toast.makeText(mContext, getResources().getString(cn.leon.superwechat.R.string.Password_cannot_be_empty), Toast.LENGTH_SHORT).show();
 					passwordEditText.requestFocus();
+					userNameEditText.setError(getResources().getString(cn.leon.superwechat.R.string.Password_cannot_be_empty));
 					return;
 				} else if (TextUtils.isEmpty(confirm_pwd)) {
-					Toast.makeText(mContext, getResources().getString(cn.leon.superwechat.R.string.Confirm_password_cannot_be_empty), Toast.LENGTH_SHORT).show();
 					confirmPwdEditText.requestFocus();
+					confirmPwdEditText.setError(getResources().getString(cn.leon.superwechat.R.string.Confirm_password_cannot_be_empty));
 					return;
 				} else if (!pwd.equals(confirm_pwd)) {
-					Toast.makeText(mContext, getResources().getString(cn.leon.superwechat.R.string.Two_input_password), Toast.LENGTH_SHORT).show();
+					confirmPwdEditText.requestFocus();
+					confirmPwdEditText.setError(getResources().getString(cn.leon.superwechat.R.string.Two_input_password));
 					return;
 				}
 
