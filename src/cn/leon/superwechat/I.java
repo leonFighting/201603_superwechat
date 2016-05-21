@@ -64,7 +64,7 @@ public interface I {
 		String UPDATE_TIME 							= 		"m_location_last_update_time";	//最后更新时间
 	}
 	//C:\superwechatDB
-	String AVATAR_PATH 								= 		"//c/superwechatDB/";
+	String AVATAR_PATH 								= 		"C:/superwechatDB";
 	String ISON8859_1 								= 		"iso8859-1";
 	String UTF_8 									= 		"utf-8";
 	String PAGE_ID 									= 		"page_id";						//分页的起始下标
