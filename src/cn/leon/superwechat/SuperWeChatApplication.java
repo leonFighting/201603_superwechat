@@ -25,14 +25,15 @@ import cn.leon.superwechat.bean.Contact;
 import cn.leon.superwechat.bean.Group;
 import cn.leon.superwechat.bean.Member;
 import cn.leon.superwechat.bean.User;
+import cn.leon.superwechat.data.RequestManager;
 
 public class SuperWeChatApplication extends Application {
-	public static String SERVER_ROOT="http://10.0.2.2:8080/SuperWeChatServer/Server";
+	public static String SERVER_ROOT="http://172.22.116.1:8080/SuperWeChatServer/Server";
 	public static Context applicationContext;
 	private static SuperWeChatApplication instance;
 	// login user name
 	public final String PREF_USERNAME = "username";
-	
+
 	/**
 	 * 当前用户nickname,为了苹果推送不是userid而是昵称
 	 */
@@ -64,6 +65,7 @@ public class SuperWeChatApplication extends Application {
          * }
          */
         hxSDKHelper.onInit(applicationContext);
+		RequestManager.init(applicationContext);/**添加Volley初始化*/
 	}
 
 	public static SuperWeChatApplication getInstance() {
