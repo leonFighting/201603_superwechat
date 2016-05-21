@@ -14,10 +14,14 @@ import cn.leon.superwechat.bean.User;
  */
 public class UserDao extends SQLiteOpenHelper {
 
-
-    public UserDao(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, "user.db", factory, 1);
+    public UserDao(Context context) {
+        super(context, "user.db", null, 1);
     }
+
+
+
+
+
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
