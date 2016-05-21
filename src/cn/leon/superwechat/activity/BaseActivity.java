@@ -19,11 +19,15 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import cn.leon.superwechat.applib.controller.HXSDKHelper;
+import cn.leon.superwechat.data.RequestManager;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.umeng.analytics.MobclickAgent;
 
 public class BaseActivity extends FragmentActivity {
-
+    BaseActivity activity;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -34,7 +38,7 @@ public class BaseActivity extends FragmentActivity {
         super.onResume();
         // onresume时，取消notification显示
         HXSDKHelper.getInstance().getNotifier().reset();
-        
+        activity = this;
         // umeng
         MobclickAgent.onResume(this);
     }
@@ -54,5 +58,24 @@ public class BaseActivity extends FragmentActivity {
      */
     public void back(View view) {
         finish();
+    }
+    //取消任务
+    @Override
+    protected void onStop() {
+        super.onStop();
+        RequestManager.cancelAll(activity);
+    }
+    //添加任务
+    public void executeRequest(Request<?> request){
+        RequestManager.addRequest(request,activity);
+    }
+    //error方法
+    public Response.ErrorListener errorListener(){
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.print(volleyError.getMessage());
+            }
+        };
     }
 }
