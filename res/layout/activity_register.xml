@@ -83,7 +83,6 @@
                 android:layout_toLeftOf="@id/iv_nick"
                 android:background="@null"
                 android:hint="@string/nickname"
-                android:inputType="textPassword"
                 android:paddingLeft="10dip"
                 android:singleLine="true"
                 android:textSize="18sp" />

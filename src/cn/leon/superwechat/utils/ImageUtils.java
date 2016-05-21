@@ -47,10 +47,15 @@ public class ImageUtils {
         return path;
     }
 
-	/*
-		注册时把上传的头像保存到SD卡并且返回他的位置
-		给一个头像的保存地址，返回这个头像在sd卡的绝对路径
-	 */
+	/**
+	 * 	注册时把上传的头像保存到SD卡并且返回他的位置
+	 *	给一个头像文件名，返回这个头像在sd卡文件夹的绝对路径
+	 *	path:user_avatar/group_icon
+	 *	Android/data/cn.leon.superwechat/files/pictures/user_avatar
+	 * @param context
+	 * @param path
+     * @return
+     */
 	public static String getAvatarPath(Context context, String path) {
 		File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 		File folder = new File(dir, path);
