@@ -11,27 +11,27 @@ import cn.leon.superwechat.bean.User;
 
 /**
  * Created by leon on 2016/5/19.
+ * 将登录成功的用户保存到本地应用的数据库里
+ * 本地apk数据库,远端数据库,环信数据库
  */
 public class UserDao extends SQLiteOpenHelper {
+    public static final String Id = "_id";
+    public static final String TABLE_NAME = "user";
 
     public UserDao(Context context) {
         super(context, "user.db", null, 1);
     }
 
-
-
-
-
-
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = "DROP TABLE IF EXISTS "+ I.User.TABLE_NAME+" " +
-                "CREATE TABLE "+I.User.TABLE_NAME +
-                I.User.USER_ID+" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                I.User.USER_NAME+" TEXT NOT NULL," +
-                I.User.PASSWORD+" TEXT NOT NULL," +
-                I.User.NICK+" TEXT NOT NULL," +
-                I.User.UN_READ_MSG_COUNT+" INTEGER DEFAULT 0" +");";
+    public void onCreate(SQLiteDatabase db) {
+        String sql = "create table if not exists " + TABLE_NAME + "( " +
+                I.User.USER_ID + " integer primary key autoincrement, " +
+                I.User.USER_NAME + " varchar unique not null, " +
+                I.User.NICK + " varchar, " +
+                I.User.PASSWORD + " varchar, " +
+                I.User.UN_READ_MSG_COUNT + " int default(0) " +
+                ");";
+        db.execSQL(sql);
     }
 
     @Override
@@ -48,9 +48,9 @@ public class UserDao extends SQLiteOpenHelper {
         values.put(I.User.UN_READ_MSG_COUNT, user.getMUserUnreadMsgCount());
         SQLiteDatabase db = getWritableDatabase();
         long insert = db.insert(I.User.TABLE_NAME, null, values);
-        db.close();
         return insert > 0;
     }
+
     public boolean updateUser(User user) {
         ContentValues values = new ContentValues();
         values.put(I.User.USER_ID, user.getMUserId());
@@ -60,13 +60,12 @@ public class UserDao extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         long insert = db.update(I.User.TABLE_NAME, values, "where" + I.User.USER_NAME + "=?",
                 new String[]{user.getMUserName()});
-        db.close();
         return insert > 0;
     }
 
     public User findUserByName(String userName) {
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "select* from " + I.User.TABLE_NAME + " where " + I.User.USER_NAME + "=?";
+        String sql = "select * from " + TABLE_NAME + " where " + I.User.USER_NAME + "=?";
         Cursor cursor = db.rawQuery(sql, new String[]{userName});
         if (cursor.moveToNext()) {
             int uid = cursor.getInt(cursor.getColumnIndex(I.User.USER_ID));
@@ -76,7 +75,6 @@ public class UserDao extends SQLiteOpenHelper {
             return new User(uid, userName, password, nick, unReadMsgCount);
         }
         cursor.close();
-        db.close();
         return null;
     }
 }
