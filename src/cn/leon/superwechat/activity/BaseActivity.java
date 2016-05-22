@@ -38,6 +38,7 @@ public class BaseActivity extends FragmentActivity {
         super.onResume();
         // onresume时，取消notification显示
         HXSDKHelper.getInstance().getNotifier().reset();
+        //实例化activity
         activity = this;
         // umeng
         MobclickAgent.onResume(this);

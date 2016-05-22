@@ -28,17 +28,17 @@ import cn.leon.superwechat.bean.User;
 import cn.leon.superwechat.data.RequestManager;
 
 public class SuperWeChatApplication extends Application {
-	public static String SERVER_ROOT="http://172.22.116.1:8080/SuperWeChatServer/Server";
+	public static String SERVER_ROOT="http://192.168.0.107:8080/SuperWeChatServer/Server";
 	public static Context applicationContext;
 	private static SuperWeChatApplication instance;
 	// login user name
-	public final String PREF_USERNAME = "username";
+	public final String PREF_USERNAME  = "username";
 
 	/**
 	 * 当前用户nickname,为了苹果推送不是userid而是昵称
 	 */
 	public static String currentUserNick = "";
-	public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper( );
+	public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper();
 
 	@Override
 	public void onCreate() {
