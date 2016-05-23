@@ -33,6 +33,7 @@ import cn.leon.superwechat.Constant;
 import cn.leon.superwechat.domain.EMUser;
 import cn.leon.superwechat.utils.UserUtils;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.easemob.util.EMLog;
 
 /**
@@ -59,9 +60,9 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 		copyUserList.addAll(objects);
 		layoutInflater = LayoutInflater.from(context);
 	}
-	
+
 	private static class ViewHolder {
-	    ImageView avatar;
+	    NetworkImageView avatar;
 	    TextView unreadMsgView;
 	    TextView nameTextview;
 	    TextView tvHeader;
@@ -72,7 +73,7 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
  		if(convertView == null){
  		    holder = new ViewHolder();
 			convertView = layoutInflater.inflate(res, null);
-			holder.avatar = (ImageView) convertView.findViewById(cn.leon.superwechat.R.id.avatar);
+			holder.avatar = (NetworkImageView) convertView.findViewById(cn.leon.superwechat.R.id.avatar);
 			holder.unreadMsgView = (TextView) convertView.findViewById(cn.leon.superwechat.R.id.unread_msg_number);
 			holder.nameTextview = (TextView) convertView.findViewById(cn.leon.superwechat.R.id.name);
 			holder.tvHeader = (TextView) convertView.findViewById(cn.leon.superwechat.R.id.header);
@@ -80,7 +81,7 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 		}else{
 		    holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		EMUser user = getItem(position);
 		if(user == null)
 			Log.d("ContactAdapter", position + "");
@@ -100,7 +101,7 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 		//显示申请与通知item
 		if(username.equals(Constant.NEW_FRIENDS_USERNAME)){
 		    holder.nameTextview.setText(user.getNick());
-		    holder.avatar.setImageResource(cn.leon.superwechat.R.drawable.new_friends_icon);
+			holder.avatar.setDefaultImageResId(cn.leon.superwechat.R.drawable.new_friends_icon);
 			if(user.getUnreadMsgCount() > 0){
 			    holder.unreadMsgView.setVisibility(View.VISIBLE);
 //			    holder.unreadMsgView.setText(user.getUnreadMsgCount()+"");
@@ -110,31 +111,31 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 		}else if(username.equals(Constant.GROUP_USERNAME)){
 			//群聊item
 		    holder.nameTextview.setText(user.getNick());
-		    holder.avatar.setImageResource(cn.leon.superwechat.R.drawable.groups_icon);
+		    holder.avatar.setDefaultImageResId(cn.leon.superwechat.R.drawable.groups_icon);
 		}else if(username.equals(Constant.CHAT_ROOM)){
             //群聊item
             holder.nameTextview.setText(user.getNick());
-            holder.avatar.setImageResource(cn.leon.superwechat.R.drawable.groups_icon);
+            holder.avatar.setDefaultImageResId(cn.leon.superwechat.R.drawable.groups_icon);
 		}else if(username.equals(Constant.CHAT_ROBOT)){
 			//Robot item
 			holder.nameTextview.setText(user.getNick());
-			holder.avatar.setImageResource(cn.leon.superwechat.R.drawable.groups_icon);
+			holder.avatar.setDefaultImageResId(cn.leon.superwechat.R.drawable.groups_icon);
 		}else{
 		    holder.nameTextview.setText(user.getNick());
 		    //设置用户头像
-			UserUtils.setUserAvatar(getContext(), username, holder.avatar);
-			if(holder.unreadMsgView != null)
+            UserUtils.setUserBeanAvatar(username,holder.avatar);
+            if(holder.unreadMsgView != null)
 			    holder.unreadMsgView.setVisibility(View.INVISIBLE);
 		}
-		
+
 		return convertView;
 	}
-	
+
 	@Override
 	public EMUser getItem(int position) {
 		return super.getItem(position);
 	}
-	
+
 	@Override
 	public int getCount() {
 		return super.getCount();
@@ -147,7 +148,7 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 	public int getSectionForPosition(int position) {
 		return sectionOfPosition.get(position);
 	}
-	
+
 	@Override
 	public Object[] getSections() {
 		positionOfSection = new SparseIntArray();
@@ -171,7 +172,7 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 		}
 		return list.toArray(new String[list.size()]);
 	}
-	
+
 	@Override
 	public Filter getFilter() {
 		if(myFilter==null){
@@ -179,10 +180,10 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 		}
 		return myFilter;
 	}
-	
+
 	private class  MyFilter extends Filter{
         List<EMUser> mOriginalList = null;
-		
+
 		public MyFilter(List<EMUser> myList) {
 			this.mOriginalList = myList;
 		}
@@ -195,7 +196,7 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 			}
 			EMLog.d(TAG, "contacts original size: " + mOriginalList.size());
 			EMLog.d(TAG, "contacts copy size: " + copyUserList.size());
-			
+
 			if(prefix==null || prefix.length()==0){
 				results.values = copyUserList;
 				results.count = copyUserList.size();
@@ -206,14 +207,14 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 				for(int i=0;i<count;i++){
 					final EMUser user = mOriginalList.get(i);
 					String username = user.getUsername();
-					
+
 					if(username.startsWith(prefixString)){
 						newValues.add(user);
 					}
 					else{
 						 final String[] words = username.split(" ");
 	                     final int wordCount = words.length;
-	
+
 	                     // Start at index 0, in case valueText starts with space(s)
 	                     for (int k = 0; k < wordCount; k++) {
 	                         if (words[k].startsWith(prefixString)) {
@@ -245,8 +246,8 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 			}
 		}
 	}
-	
-	
+
+
 	@Override
 	public void notifyDataSetChanged() {
 	    super.notifyDataSetChanged();
@@ -255,6 +256,6 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 	        copyUserList.addAll(userList);
 	    }
 	}
-	
+
 
 }
