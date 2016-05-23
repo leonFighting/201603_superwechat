@@ -38,7 +38,7 @@ public class DownloadContactListTask extends BaseActivity {
     request=download_contact_all_list&m_contact_user_name=*/
     public void initDownloadContactListUrl() {
         try {
-            downloadContactListUrl = new ApiParams().with(I.User.USER_NAME, userName)
+            downloadContactListUrl = new ApiParams().with(I.Contact.USER_NAME, userName)
                     .getRequestUrl(I.REQUEST_DOWNLOAD_CONTACT_ALL_LIST);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,6 +58,7 @@ public class DownloadContactListTask extends BaseActivity {
                 if (contacts == null) {
                     return;
                 }
+                Log.e(TAG,"responseDownloadContactListListener,contacts.length="+contacts.length);
                 ArrayList<Contact> list = OkHttpUtils.array2List(contacts);
                 SuperWeChatApplication instance = SuperWeChatApplication.getInstance();
                 ArrayList<Contact> contactList = instance.getContactList();

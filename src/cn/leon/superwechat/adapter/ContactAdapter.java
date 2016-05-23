@@ -121,7 +121,7 @@ public class ContactAdapter extends ArrayAdapter<EMUser>  implements SectionInde
 			holder.nameTextview.setText(user.getNick());
 			holder.avatar.setDefaultImageResId(cn.leon.superwechat.R.drawable.groups_icon);
 		}else{
-		    holder.nameTextview.setText(user.getNick());
+			UserUtils.setUserBeanNick(username,holder.nameTextview);
 		    //设置用户头像
             UserUtils.setUserBeanAvatar(username,holder.avatar);
             if(holder.unreadMsgView != null)
