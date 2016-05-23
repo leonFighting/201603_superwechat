@@ -59,13 +59,15 @@ import cn.leon.superwechat.db.EMUserDao;
 import cn.leon.superwechat.db.UserDao;
 import cn.leon.superwechat.domain.EMUser;
 import cn.leon.superwechat.listener.OnSetAvatarListener;
+import cn.leon.superwechat.task.DownloadAllGroupsTask;
+import cn.leon.superwechat.task.DownloadContactListTask;
+import cn.leon.superwechat.task.DownloadPublicGroupsTask;
 import cn.leon.superwechat.utils.CommonUtils;
 import cn.leon.superwechat.utils.MD5;
 import cn.leon.superwechat.utils.Utils;
 
 /**
  * 登陆页面
- *
  */
 public class LoginActivity extends BaseActivity {
     Activity mContext;
@@ -80,6 +82,7 @@ public class LoginActivity extends BaseActivity {
     private String currentUsername;
     private String currentPassword;
     ProgressDialog pd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +132,6 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 登录
-     *
      */
     public void setLoginClickListener() {
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
@@ -191,6 +193,7 @@ public class LoginActivity extends BaseActivity {
         //如果不为空说明之前登录过，并且将用户名和密码都保存到本地应用里
         if (user != null) {
             if (user.getMUserPassword().equals(MD5.getData(currentPassword))) {
+                savaUser(user);
                 loginSuccess();
             } else {
                 pd.dismiss();
@@ -199,10 +202,10 @@ public class LoginActivity extends BaseActivity {
         } else {
             //第一次登录，本地没有该用户,volley登录远端服务器验证
             try {
-                String path = new ApiParams().with(I.User.USER_NAME,currentUsername)
-                        .with(I.User.PASSWORD,currentPassword)
+                String path = new ApiParams().with(I.User.USER_NAME, currentUsername)
+                        .with(I.User.PASSWORD, currentPassword)
                         .getRequestUrl(I.REQUEST_LOGIN);
-                executeRequest(new GsonRequest<User>(path,User.class,responseListener(),errorListener()));
+                executeRequest(new GsonRequest<User>(path, User.class, responseListener(), errorListener()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -213,7 +216,7 @@ public class LoginActivity extends BaseActivity {
         return new Response.Listener<User>() {
             @Override
             public void onResponse(User user) {
-                if (user.isResult ( )) {
+                if (user.isResult()) {
                     //第一次登录，验证成功后保存用户到全局变量，添加本地应用UserDao
                     savaUser(user);
                     user.setMUserPassword(MD5.getData(user.getMUserPassword()));
@@ -229,7 +232,9 @@ public class LoginActivity extends BaseActivity {
         };
     }
 
-    /**保存当前登录的用户到全局变量*/
+    /**
+     * 保存当前登录的用户到全局变量
+     */
     private void savaUser(User user) {
         SuperWeChatApplication instance = SuperWeChatApplication.getInstance();
         instance.setUser(user);
@@ -246,8 +251,8 @@ public class LoginActivity extends BaseActivity {
             EMChatManager.getInstance().loadAllConversations();
             final OkHttpUtils<Message> utils = new OkHttpUtils<Message>();
             utils.url(SuperWeChatApplication.SERVER_ROOT)
-                    .addParam(I.KEY_REQUEST,I.REQUEST_DOWNLOAD_AVATAR)
-                    .addParam(I.AVATAR_TYPE,currentUsername)
+                    .addParam(I.KEY_REQUEST, I.REQUEST_DOWNLOAD_AVATAR)
+                    .addParam(I.AVATAR_TYPE, currentUsername)
                     .doInBackground(new Callback() {
                         @Override
                         public void onFailure(Request request, IOException e) {
@@ -263,6 +268,18 @@ public class LoginActivity extends BaseActivity {
                             utils.downloadFile(response, file, false);
                         }
                     }).execute(null);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG,"start download contact,group,public group");
+                    //下载联系人集合
+                    new DownloadContactListTask(mContext, currentUsername).execute();
+                    //下载群组集合
+                    new DownloadAllGroupsTask(mContext, currentUsername).execute();
+                    //下载公开群组集合
+                    new DownloadPublicGroupsTask(mContext, currentUsername, I.PAGE_ID_DEFAULT, I.PAGE_SIZE_DEFAULT).execute();
+                }
+            });
             // 处理好友和群组
             initializeContacts();
             //
