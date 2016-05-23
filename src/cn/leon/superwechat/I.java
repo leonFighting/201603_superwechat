@@ -10,7 +10,7 @@ public interface I {
 		String NICK 								= 		"m_user_nick";					//用户昵称
 		String UN_READ_MSG_COUNT 					= 		"m_user_unread_msg_count";		//未读消息数量
 	}
-	
+
 	interface Contact {
 		String TABLE_NAME 							= 		"t_superwechat_contact";
 		String CONTACT_ID 							= 		"m_contact_id";					//主键
@@ -19,7 +19,7 @@ public interface I {
 		String CU_ID 								= 		"m_contact_cid";				//好友id
 		String CU_NAME 								= 		"m_contact_cname";				//好友账号
 	}
-	
+
 	interface Group {
 		String TABLE_NAME 							= 		"t_superwechat_group";
 		String GROUP_ID 							= 		"m_group_id";					// 主键
@@ -33,7 +33,7 @@ public interface I {
 		String IS_PUBLIC 							= 		"m_group_is_public";			//群组是否公开
 		String ALLOW_INVITES 						= 		"m_group_allow_invites";		//是否可以邀请
 	}
-	
+
 	interface Member {
 		String TABLE_NAME 							= 		"t_superwechat_member";
 		String MEMBER_ID 							= 		"m_member_id";					//主键
@@ -43,7 +43,7 @@ public interface I {
 		String GROUP_HX_ID 							= 		"m_member_group_hxid";			//群组环信id
 		String PERMISSION 							= 		"m_member_permission";			//用户对群组的权限\n0:普通用户\n1:群组所有者
 	}
-	
+
 	interface Avatar {
 		String TABLE_NAME 							= 		"t_superwechat_avatar";
 		String AVATAR_ID 							= 		"m_avatar_id";					//主键
@@ -52,7 +52,7 @@ public interface I {
 		String AVATAR_PATH 							= 		"m_avatar_path";				//保存路径
 		String AVATAR_TYPE 							= 		"m_avatar_type";				//头像类型：\n0:用户头像\n1:群组头像
 	}
-	
+
 	interface Location {
 		String TABLE_NAME 							= 		"t_superwechat_location";
 		String LOCATION_ID 							= 		"m_location_id";				//主键
@@ -68,7 +68,9 @@ public interface I {
 	String ISON8859_1 								= 		"iso8859-1";
 	String UTF_8 									= 		"utf-8";
 	String PAGE_ID 									= 		"page_id";						//分页的起始下标
-	String PAGE_SIZE 								= 		"page_size";					//分页的每页数量
+	String PAGE_SIZE								= 		"page_size";					//分页的每页数量
+	int PAGE_ID_DEFAULT 							= 		0;						        //分页的起始下标默认值
+	int PAGE_SIZE_DEFAULT 							= 		20;					            //分页的每页数量默认值
 	int ID_DEFAULT									=		0;								//ID默认值
 	int UN_READ_MSG_COUNT_DEFAULT					=		0;								//未读消息数量默认值
 	int GROUP_MAX_USERS_DEFAULT 					= 		-1;								//群组最大人数默认值
