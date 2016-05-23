@@ -1,4 +1,4 @@
-package cn.leon.superwechat.activity;
+package cn.leon.superwechat.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.leon.superwechat.BuildConfig;
+import cn.leon.superwechat.activity.RecorderVideoActivity;
 import cn.leon.superwechat.domain.VideoEntity;
 import cn.leon.superwechat.video.util.ImageCache;
 import cn.leon.superwechat.video.util.ImageResizer;

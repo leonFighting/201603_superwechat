@@ -1,4 +1,4 @@
-package cn.leon.superwechat.activity;
+package cn.leon.superwechat.fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +40,8 @@ import com.easemob.chat.EMConversation.EMConversationType;
 import cn.leon.superwechat.Constant;
 import cn.leon.superwechat.SuperWeChatApplication;
 import cn.leon.superwechat.R;
+import cn.leon.superwechat.activity.ChatActivity;
+import cn.leon.superwechat.activity.MainActivity;
 import cn.leon.superwechat.adapter.ChatAllHistoryAdapter;
 import cn.leon.superwechat.db.InviteMessgeDao;
 
@@ -47,7 +49,7 @@ import cn.leon.superwechat.db.InviteMessgeDao;
  * 显示所有会话记录，比较简单的实现，更好的可能是把陌生人存入本地，这样取到的聊天记录是可控的
  * 
  */
-public class ChatAllHistoryFragment extends Fragment implements View.OnClickListener {
+public class ChatAllHistoryFragment extends Fragment implements OnClickListener {
 
 	private InputMethodManager inputMethodManager;
 	private ListView listView;

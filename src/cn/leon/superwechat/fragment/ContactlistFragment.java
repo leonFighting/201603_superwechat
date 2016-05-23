@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.leon.superwechat.activity;
+package cn.leon.superwechat.fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +49,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import cn.leon.superwechat.activity.AddContactActivity;
+import cn.leon.superwechat.activity.ChatActivity;
+import cn.leon.superwechat.activity.GroupsActivity;
+import cn.leon.superwechat.activity.MainActivity;
+import cn.leon.superwechat.activity.NewFriendsMsgActivity;
+import cn.leon.superwechat.activity.PublicChatRoomsActivity;
+import cn.leon.superwechat.activity.RobotsActivity;
 import cn.leon.superwechat.applib.controller.HXSDKHelper;
 import cn.leon.superwechat.applib.controller.HXSDKHelper.HXSyncListener;
 import com.easemob.chat.EMContactManager;
@@ -85,7 +92,7 @@ public class ContactlistFragment extends Fragment {
     private EMUser toBeProcessUser;
     private String toBeProcessUsername;
 
-	class HXContactSyncListener implements HXSDKHelper.HXSyncListener {
+	class HXContactSyncListener implements HXSyncListener {
 		@Override
 		public void onSyncSucess(final boolean success) {
 			EMLog.d(TAG, "on contact list sync success:" + success);
@@ -104,13 +111,13 @@ public class ContactlistFragment extends Fragment {
 		                        progressBar.setVisibility(View.GONE);
 		                    }
 		                }
-		                
+
 		            });
 				}
 			});
 		}
 	}
-	
+
 	class HXBlackListSyncListener implements HXSyncListener{
 
         @Override
@@ -122,13 +129,13 @@ public class ContactlistFragment extends Fragment {
                     blackList = EMContactManager.getInstance().getBlackListUsernames();
                     refresh();
                 }
-                
+
             });
         }
-	    
+
 	};
-	
-	class HXContactInfoSyncListener implements HXSDKHelper.HXSyncListener{
+
+	class HXContactInfoSyncListener implements HXSyncListener{
 
 		@Override
 		public void onSyncSucess(final boolean success) {
@@ -319,7 +326,7 @@ public class ContactlistFragment extends Fragment {
 	/**
 	 * 删除联系人
 	 * 
-	 * @param toDeleteUser
+	 * @param tobeDeleteUser
 	 */
 	public void deleteContact(final EMUser tobeDeleteUser) {
 		String st1 = getResources().getString(cn.leon.superwechat.R.string.deleting);
@@ -464,12 +471,12 @@ public class ContactlistFragment extends Fragment {
 			}
 		});
 
-		if(users.get(Constant.CHAT_ROBOT)!=null){
-			contactList.add(0, users.get(Constant.CHAT_ROBOT));
-		}
+//		if(users.get(Constant.CHAT_ROBOT)!=null){
+//			contactList.add(0, users.get(Constant.CHAT_ROBOT));
+//		}
 		// 加入"群聊"和"聊天室"
-        if(users.get(Constant.CHAT_ROOM) != null)
-            contactList.add(0, users.get(Constant.CHAT_ROOM));
+//        if(users.get(Constant.CHAT_ROOM) != null)
+//            contactList.add(0, users.get(Constant.CHAT_ROOM));
         if(users.get(Constant.GROUP_USERNAME) != null)
             contactList.add(0, users.get(Constant.GROUP_USERNAME));
         

@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.leon.superwechat.activity;
+package cn.leon.superwechat.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -32,6 +32,12 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 
 import cn.leon.superwechat.SuperWeChatApplication;
+import cn.leon.superwechat.activity.BlacklistActivity;
+import cn.leon.superwechat.activity.DiagnoseActivity;
+import cn.leon.superwechat.activity.LoginActivity;
+import cn.leon.superwechat.activity.MainActivity;
+import cn.leon.superwechat.activity.OfflinePushNickActivity;
+import cn.leon.superwechat.activity.UserProfileActivity;
 import cn.leon.superwechat.applib.controller.HXSDKHelper;
 
 import com.easemob.chat.EMChatManager;
