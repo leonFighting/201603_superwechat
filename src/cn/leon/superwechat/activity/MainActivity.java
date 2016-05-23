@@ -62,6 +62,9 @@ import cn.leon.superwechat.db.InviteMessgeDao;
 import cn.leon.superwechat.db.EMUserDao;
 import cn.leon.superwechat.domain.EMUser;
 import cn.leon.superwechat.domain.InviteMessage;
+import cn.leon.superwechat.fragment.ChatAllHistoryFragment;
+import cn.leon.superwechat.fragment.ContactlistFragment;
+import cn.leon.superwechat.fragment.SettingsFragment;
 import cn.leon.superwechat.utils.CommonUtils;
 import com.easemob.util.EMLog;
 import com.easemob.util.HanziToPinyin;
@@ -226,20 +229,20 @@ public class MainActivity extends BaseActivity implements EMEventListener {
                 userlist.put(Constant.GROUP_USERNAME, groupUser);
                 
                  // 添加"聊天室"
-                EMUser chatRoomItem = new EMUser();
-                String strChatRoom = context.getString(cn.leon.superwechat.R.string.chat_room);
-                chatRoomItem.setUsername(Constant.CHAT_ROOM);
-                chatRoomItem.setNick(strChatRoom);
-                chatRoomItem.setHeader("");
-                userlist.put(Constant.CHAT_ROOM, chatRoomItem);
-                
-                // 添加"Robot"
-        		EMUser robotUser = new EMUser();
-        		String strRobot = context.getString(cn.leon.superwechat.R.string.robot_chat);
-        		robotUser.setUsername(Constant.CHAT_ROBOT);
-        		robotUser.setNick(strRobot);
-        		robotUser.setHeader("");
-        		userlist.put(Constant.CHAT_ROBOT, robotUser);
+//                EMUser chatRoomItem = new EMUser();
+//                String strChatRoom = context.getString(cn.leon.superwechat.R.string.chat_room);
+//                chatRoomItem.setUsername(Constant.CHAT_ROOM);
+//                chatRoomItem.setNick(strChatRoom);
+//                chatRoomItem.setHeader("");
+//                userlist.put(Constant.CHAT_ROOM, chatRoomItem);
+//
+//                // 添加"Robot"
+//        		EMUser robotUser = new EMUser();
+//        		String strRobot = context.getString(cn.leon.superwechat.R.string.robot_chat);
+//        		robotUser.setUsername(Constant.CHAT_ROBOT);
+//        		robotUser.setNick(strRobot);
+//        		robotUser.setHeader("");
+//        		userlist.put(Constant.CHAT_ROBOT, robotUser);
         		
                  // 存入内存
                 ((DemoHXSDKHelper)HXSDKHelper.getInstance()).setContactList(userlist);
