@@ -12,6 +12,7 @@ import cn.leon.superwechat.SuperWeChatApplication;
 import cn.leon.superwechat.applib.controller.HXSDKHelper;
 import cn.leon.superwechat.DemoHXSDKHelper;
 import cn.leon.superwechat.bean.Contact;
+import cn.leon.superwechat.bean.User;
 import cn.leon.superwechat.data.RequestManager;
 import cn.leon.superwechat.domain.EMUser;
 
@@ -91,6 +92,16 @@ public class UserUtils {
 		}
 	}
 
+	public static void setCurrentUserBeanAvater(NetworkImageView imageView) {
+		User user = SuperWeChatApplication.getInstance().getUser();
+		imageView.setDefaultImageResId(R.drawable.default_avatar);
+		if (user != null) {
+			imageView.setImageUrl(I.REQUEST_DOWNLOAD_AVATAR_USER + user.getMUserName(), RequestManager.getImageLoader());
+		} else {
+			imageView.setErrorImageResId(R.drawable.default_avatar);
+		}
+	}
+
     /**
      * 设置用户昵称
      */
@@ -103,7 +114,7 @@ public class UserUtils {
     	}
     }
 
-    public static void setUserBeanNick(String username,TextView textView){
+    public static void 	setUserBeanNick(String username,TextView textView){
 		Contact contact = getUserBeanInfo(username);
 		if(contact != null){
 			if (contact.getMUserNick() != null) {
@@ -123,6 +134,12 @@ public class UserUtils {
     	EMUser user = ((DemoHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().getCurrentUserInfo();
     	if(textView != null){
     		textView.setText(user.getNick());
+    	}
+    }
+    public static void setCurrentUserBeanNick(TextView textView){
+		User user = SuperWeChatApplication.getInstance().getUser();
+		if(textView != null){
+    		textView.setText(user.getMUserNick());
     	}
     }
 
