@@ -154,9 +154,9 @@ public class VoicePlayClickListener implements View.OnClickListener {
 	private void showAnimation() {
 		// play voice, and start animation
 		if (message.direct == EMMessage.Direct.RECEIVE) {
-			voiceIconView.setImageResource(cn.leon.superwechat.R.anim.voice_from_icon);
+			voiceIconView.setImageResource(cn.leon.superwechat.R.drawable.voice_from_icon);
 		} else {
-			voiceIconView.setImageResource(cn.leon.superwechat.R.anim.voice_to_icon);
+			voiceIconView.setImageResource(cn.leon.superwechat.R.drawable.voice_to_icon);
 		}
 		voiceAnimation = (AnimationDrawable) voiceIconView.getDrawable();
 		voiceAnimation.start();
