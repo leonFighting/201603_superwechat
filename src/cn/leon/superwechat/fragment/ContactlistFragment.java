@@ -69,6 +69,7 @@ import cn.leon.superwechat.bean.Contact;
 import cn.leon.superwechat.db.InviteMessgeDao;
 import cn.leon.superwechat.db.EMUserDao;
 import cn.leon.superwechat.domain.EMUser;
+import cn.leon.superwechat.utils.UserUtils;
 import cn.leon.superwechat.widget.Sidebar;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
@@ -96,7 +97,7 @@ public class ContactlistFragment extends Fragment {
     private EMUser toBeProcessUser;
     private String toBeProcessUsername;
 	ContactListChangedReceiver mReceiver;
-	ArrayList<Contact> mContactist;
+	ArrayList<Contact> mContactist = new ArrayList<Contact>();
 
 	class HXContactSyncListener implements HXSyncListener {
 		@Override
@@ -178,7 +179,6 @@ public class ContactlistFragment extends Fragment {
 		//黑名单列表
 		blackList = EMContactManager.getInstance().getBlackListUsernames();
 		contactList = new ArrayList<EMUser>();
-		mContactist = new ArrayList<Contact>();
 		// 获取设置contactlist
 		getContactList();
 		
@@ -474,36 +474,44 @@ public class ContactlistFragment extends Fragment {
 	 * 获取联系人列表，并过滤掉黑名单和排序
 	 */
 	private void getContactList() {
-		contactList.clear();
 		mContactist.clear();
 		//获取本地好友列表
 		ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
 		mContactist.addAll(contactList);
 		// 添加"群聊"
 		Contact groupUser = new Contact();
+		groupUser.setMContactId(-2);
 		String strGroup = getActivity().getString(cn.leon.superwechat.R.string.group_chat);
 		groupUser.setMContactCname(Constant.GROUP_USERNAME);
+		groupUser.setMUserName(Constant.GROUP_USERNAME);
 		groupUser.setMUserNick(strGroup);
 		groupUser.setHeader("");
-		if (!mContactist.contains(groupUser)) {
-			this.mContactist.add(0,groupUser);
+		if (mContactist.indexOf(groupUser)==-1) {
+			mContactist.add(0,groupUser);
 		}
 		// 添加user"申请与通知"
 		Contact newFriends = new Contact();
+		newFriends.setMContactId(-1);
 		newFriends.setMContactCname(Constant.NEW_FRIENDS_USERNAME);
+		newFriends.setMUserName(Constant.GROUP_USERNAME);
 		String strChat = getActivity().getString(cn.leon.superwechat.R.string.Application_and_notify);
 		newFriends.setMUserNick(strChat);
-		if (!mContactist.contains(newFriends)) {
-			this.mContactist.add(0,newFriends);
+		newFriends.setHeader("");
+		if (mContactist.indexOf(newFriends)==-1) {
+			mContactist.add(0,newFriends);
+		}
+		for (Contact contact : mContactist) {
+			UserUtils.setUserHearder(contact.getMContactCname(),contact);
 		}
 		// 排序
-		Collections.sort(this.contactList, new Comparator<EMUser>() {
+		Collections.sort(this.mContactist, new Comparator<Contact>() {
 
 			@Override
-			public int compare(EMUser lhs, EMUser rhs) {
-				return lhs.getUsername().compareTo(rhs.getUsername());
+			public int compare(Contact lhs, Contact rhs) {
+				return lhs.getHeader().compareTo(rhs.getHeader());
 			}
 		});
+
 
 //        if(users.get(Constant.GROUP_USERNAME) != null)
 //            this.contactList.add(0, users.get(Constant.GROUP_USERNAME));

@@ -58,6 +58,7 @@ import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.TextMessageBody;
 import cn.leon.superwechat.Constant;
 import cn.leon.superwechat.DemoHXSDKHelper;
+import cn.leon.superwechat.bean.Contact;
 import cn.leon.superwechat.db.InviteMessgeDao;
 import cn.leon.superwechat.db.EMUserDao;
 import cn.leon.superwechat.domain.EMUser;
@@ -322,7 +323,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
             }
         }
     }
-    
+
 	/**
 	 * 初始化组件
 	 */
@@ -549,7 +550,7 @@ public class MainActivity extends BaseActivity implements EMEventListener {
 					String st10 = getResources().getString(cn.leon.superwechat.R.string.have_you_removed);
 					if (ChatActivity.activityInstance != null
 							&& usernameList.contains(ChatActivity.activityInstance.getToChatUsername())) {
-						Toast.makeText(MainActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, 1)
+						Toast.makeText(MainActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, Toast.LENGTH_LONG)
 								.show();
 						ChatActivity.activityInstance.finish();
 					}
