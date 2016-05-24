@@ -228,6 +228,7 @@ public class ContactlistFragment extends Fragment {
 		} else {
 			progressBar.setVisibility(View.GONE);
 		}
+		registerContactListChangedReceiver();
 	}
 
 	private void setListener() {
@@ -338,7 +339,6 @@ public class ContactlistFragment extends Fragment {
 		if (!hidden) {
 			refresh();
 		}
-		registerContactListChangedReceiver();
 	}
 
 	/**
