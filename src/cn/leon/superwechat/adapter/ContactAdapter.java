@@ -56,7 +56,6 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 
 	public ContactAdapter(Context context, int resource, ArrayList<Contact> objects) {
 		this.res = resource;
-		this.res = resource;
 		this.userList = objects;
 		mContext = context;
 		copyUserList = new ArrayList<Contact>();
@@ -111,7 +110,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 			holder.avatar.setDefaultImageResId(cn.leon.superwechat.R.drawable.new_friends_icon);
 			holder.avatar.setImageUrl("", RequestManager.getImageLoader());
 			holder.avatar.setErrorImageResId(R.drawable.new_friends_icon);
-			if(user.getMUserUnreadMsgCount() > 0){
+			if(user.getMUserUnreadMsgCount() > 0||user.getMUserUnreadMsgCount()>0){
 			    holder.unreadMsgView.setVisibility(View.VISIBLE);
 //			    holder.unreadMsgView.setText(user.getUnreadMsgCount()+"");
 			}else{
@@ -177,7 +176,7 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		for (int i = 1; i < count; i++) {
 
 			String letter = getItem(i).getHeader();
-			EMLog.d(TAG, "contactadapter getsection getHeader:" + letter + " name:" + getItem(i).getMUserName());
+			EMLog.d(TAG, "contactadapter getsection getHeader:" + letter + " name:" + getItem(i).getMContactCname());
 			int section = list.size() - 1;
 			if (list.get(section) != null && !list.get(section).equals(letter)) {
 				list.add(letter);
@@ -215,15 +214,14 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 			if(prefix==null || prefix.length()==0){
 				results.values = copyUserList;
 				results.count = copyUserList.size();
-			}else{
+			}else if (mOriginalList.size()>2){
 				String prefixString = prefix.toString();
 				final int count = mOriginalList.size();
 				final ArrayList<Contact> newValues = new ArrayList<Contact>();
-				for(int i=0;i<count;i++){
+				for(int i=2;i<count;i++){
 					final Contact user = mOriginalList.get(i);
 					String username = user.getMContactCname();
-
-					if(username.startsWith(prefixString)){
+					if(username.startsWith(prefixString)||user.getMUserNick().contains(prefixString)){
 						newValues.add(user);
 					}
 					else{
@@ -250,7 +248,9 @@ public class ContactAdapter extends BaseAdapter implements SectionIndexer{
 		protected synchronized void publishResults(CharSequence constraint,
 				FilterResults results) {
 			userList.clear();
-			userList.addAll((List<Contact>)results.values);
+			if (results != null) {
+				userList.addAll((ArrayList<Contact>)results.values);
+			}
 			EMLog.d(TAG, "publish contacts filter results size: " + results.count);
 			if (results.count > 0) {
 			    notiyfyByFilter = true;
