@@ -28,7 +28,7 @@ import cn.leon.superwechat.bean.User;
 import cn.leon.superwechat.data.RequestManager;
 
 public class SuperWeChatApplication extends Application {
-	public static String SERVER_ROOT="http://192.168.0.107:8080/SuperWeChatServer/Server";
+	public static String SERVER_ROOT="http:/172.22.116.1:8080/SuperWeChatServer/Server";
 	public static Context applicationContext;
 	private static SuperWeChatApplication instance;
 	// login user name
@@ -65,7 +65,8 @@ public class SuperWeChatApplication extends Application {
          * }
          */
         hxSDKHelper.onInit(applicationContext);
-		RequestManager.init(applicationContext);/**添加Volley初始化*/
+		/**添加Volley初始化*/
+		RequestManager.init(applicationContext);
 	}
 
 	public static SuperWeChatApplication getInstance() {

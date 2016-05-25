@@ -36,6 +36,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.easemob.chat.EMContactManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cn.leon.superwechat.SuperWeChatApplication;
 import cn.leon.superwechat.DemoHXSDKHelper;
@@ -107,7 +108,7 @@ public class AddContactActivity extends BaseActivity {
                 //访问远端服务器查看有无账号
                 try {
                     String path = new ApiParams()
-                            .with(I.User.USER_NAME, name)
+                            .with(I.User.USER_NAME, toAddUsername)
                             .getRequestUrl(I.REQUEST_FIND_USER);
                     executeRequest(new GsonRequest<User>(path,User.class,
                             ResponseListener(),errorListener()));
@@ -123,10 +124,9 @@ public class AddContactActivity extends BaseActivity {
             @Override
             public void onResponse(User user) {
                 if (user != null) {
-                    ArrayList<Contact> contactList =
-                            SuperWeChatApplication.getInstance().getContactList();
+                    HashMap<String, Contact> userList = SuperWeChatApplication.getInstance().getUserList();
                     //搜索是好友账号则跳转到好友资料
-                    if (contactList.contains(user)) {
+                    if (userList.containsKey(user.getMUserName())) {
                         Intent intent = new Intent();
                         intent.setClass(mContext, UserProfileActivity.class);
                         intent.putExtra("username", user.getMUserName());
@@ -137,7 +137,9 @@ public class AddContactActivity extends BaseActivity {
                         UserUtils.setUserBeanAvatar(user,avatar);
                         UserUtils.setUserBeanNick(user,nameText);
                     }
+                    mtvNoting.setVisibility(View.GONE);
                 } else {
+                    searchedUserLayout.setVisibility(View.GONE);
                     mtvNoting.setVisibility(View.VISIBLE);
                 }
             }

@@ -7,7 +7,6 @@ import java.util.Set;
 import cn.leon.superwechat.I;
 import cn.leon.superwechat.SuperWeChatApplication;
 
-
 public class ApiParams extends HashMap<String, String> {
 	private static final long serialVersionUID = 8112047472727256876L;
 

@@ -190,6 +190,7 @@ public class LoginActivity extends BaseActivity {
     private void loginAppServer() {
         UserDao dao = new UserDao(mContext);
         User user = dao.findUserByName(currentUsername);
+        Log.e(TAG, "user=" + user);
         //如果不为空说明之前登录过，并且将用户名和密码都保存到本地应用里
         if (user != null) {
             if (user.getMUserPassword().equals(MD5.getData(currentPassword))) {
@@ -205,7 +206,39 @@ public class LoginActivity extends BaseActivity {
                 String path = new ApiParams().with(I.User.USER_NAME, currentUsername)
                         .with(I.User.PASSWORD, currentPassword)
                         .getRequestUrl(I.REQUEST_LOGIN);
+
+                Log.e(TAG, "path=" + path);
                 executeRequest(new GsonRequest<User>(path, User.class, responseListener(), errorListener()));
+//            OkHttpUtils<User> utils = new OkHttpUtils<User>();
+//            utils.url(SuperWeChatApplication.SERVER_ROOT)
+//                    .addParam(I.KEY_REQUEST, I.REQUEST_LOGIN)
+//                    .addParam(I.User.USER_NAME, currentUsername)
+//                    .addParam(I.User.PASSWORD, currentPassword)
+//                    .targetClass(User.class)
+//                    .execute(new OkHttpUtils.OnCompleteListener<User>() {
+//                                 @Override
+//                                 public void onSuccess(User result) {
+//                                     if (result.isResult()) {
+//                                         //第一次登录，验证成功后保存用户到全局变量，添加本地应用UserDao
+//                                         savaUser(result);
+//                                         result.setMUserPassword(MD5.getData(result.getMUserPassword()));
+//                                         UserDao dao = new UserDao(mContext);
+//                                         dao.addUser(result);
+//                                         loginSuccess();
+//                                     } else {
+//                                         pd.dismiss();
+//
+//                                         Utils.showToast(mContext, Utils.getResourceString(mContext, result.getMsg()), Toast.LENGTH_LONG);
+//                                     }
+//                                 }
+//
+//                                 @Override
+//                                 public void onError(String error) {
+//
+//                                 }
+//                             }
+//
+//                    );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -235,6 +268,7 @@ public class LoginActivity extends BaseActivity {
     /**
      * 保存当前登录的用户到全局变量
      */
+
     private void savaUser(User user) {
         SuperWeChatApplication instance = SuperWeChatApplication.getInstance();
         instance.setUser(user);
@@ -271,7 +305,7 @@ public class LoginActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e(TAG,"start download contact,group,public group");
+                    Log.e(TAG, "start download contact,group,public group");
                     //下载联系人集合
                     new DownloadContactListTask(mContext, currentUsername).execute();
                     //下载群组集合

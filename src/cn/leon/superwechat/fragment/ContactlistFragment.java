@@ -472,9 +472,9 @@ public class ContactlistFragment extends Fragment {
 	 * 获取联系人列表，并过滤掉黑名单和排序
 	 */
 	private void getContactList() {
+		ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
 		mContactist.clear();
 		//获取本地好友列表
-		ArrayList<Contact> contactList = SuperWeChatApplication.getInstance().getContactList();
 		mContactist.addAll(contactList);
 		// 添加"群聊"
 		Contact groupUser = new Contact();

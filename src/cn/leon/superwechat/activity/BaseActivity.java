@@ -31,6 +31,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
+        activity = this;
     }
 
     @Override
@@ -39,7 +40,6 @@ public class BaseActivity extends FragmentActivity {
         // onresume时，取消notification显示
         HXSDKHelper.getInstance().getNotifier().reset();
         //实例化activity
-        activity = this;
         // umeng
         MobclickAgent.onResume(this);
     }
@@ -78,5 +78,4 @@ public class BaseActivity extends FragmentActivity {
                 System.out.print(volleyError.getMessage());
             }
         };
-    }
-}
+    }}
